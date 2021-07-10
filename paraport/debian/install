@@ -1,0 +1,4 @@
+src/paraport usr/bin
+src/paraport.ui usr/lib/libpport
+src/libpport/*.* usr/lib/python3/dist-packages/libpport
+*.desktop usr/share/applications

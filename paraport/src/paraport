@@ -1,0 +1,100 @@
+#!/usr/bin/python3
+
+import sys, os
+from functools import partial
+import faulthandler
+
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5 import uic
+
+
+#from libpport import buildmenus
+#from libpport import sscards
+#from libpport import checkconfig
+#from libpport import loadini
+#from libpport import buildfiles
+#from libpport import buildini
+#from libpport import buildhal
+#from libpport import buildio
+#from libpport import buildmisc
+#from libpport import pcinfo
+#from libpport import extcmd
+
+from libpport import buildmenus
+from libpport import buildcombos
+from libpport import utilities
+from libpport import helptext
+from libpport.help import Ui_Dialog as helpDialog
+from libpport.about import Ui_about as aboutDialog
+
+class VersionError(QMainWindow):
+	def __init__(self):
+		super(VersionError, self).__init__()
+		print('wrong python version')
+		msgBox = QMessageBox()
+		msgBox.setIcon(QMessageBox.Warning)
+		msgBox.setWindowTitle('Version Error')
+		msgBox.setText('Python 3.6 or newer is required.\nYour Python is {}'.format(sys.version[0:3]))
+		msgBox.setStandardButtons(QMessageBox.Ok)
+		msgBox.exec()
+		sys.exit()
+
+class MainWindow(QMainWindow):
+	def __init__(self):
+		super(MainWindow, self).__init__()
+		#path, filename = os.path.split(os.path.realpath(__file__))
+		#uic.loadUi(os.path.join(path, 'paraport.ui'), self)
+		if os.path.split(sys.argv[0])[0] == '/usr/bin':
+			self.lib_path = '/usr/lib/libpport'
+			#self.firmware_path = '/usr/lib/libpport'
+			print('Installed')
+			devel = False
+			if len(sys.argv) > 1:
+				if sys.argv[1] == 'devel':
+					devel = True
+		if os.path.split(sys.argv[0])[0] == '.':
+			self.lib_path = os.path.split(os.path.realpath(sys.argv[0]))[0]
+			#self.firmware_path = os.path.join(self.lib_path, 'firmware')
+			print('In Development')
+			devel = True
+		uic.loadUi(os.path.join(self.lib_path, 'paraport.ui'), self)
+
+		self.setWindowTitle("Parallel Port Configuration Tool")
+		self.card = {'joints':5}
+		buildcombos.build(self)
+		self.setupConnections()
+		self.setupVars()
+		faulthandler.enable()
+		utilities.setAxisTabs(self)
+
+
+		self.show()
+
+	def setupConnections(self):
+		self.configName.textChanged[str].connect(partial(utilities.configNameChanged, self))
+		for i in range(self.card['joints']):
+			getattr(self, f'axisCB_{i}').currentIndexChanged.connect(partial(utilities.axisChanged, self))
+		for i in range(self.card['joints']):
+			getattr(self, 'driveCB_' + str(i)).currentIndexChanged.connect(partial(utilities.driveChanged, self))
+		self.pp1typeCB.currentIndexChanged.connect(partial(buildmenus.buildPort1, self))
+		self.pp2typeCB.currentIndexChanged.connect(partial(buildmenus.buildPort2, self))
+
+	def test(self):
+		utilities.enableTabs(self)
+
+	def setupVars(self):
+		self.p1inBtns = {}
+		self.p1outBtns = {}
+		self.p2inBtns = {}
+		self.p2outBtns = {}
+
+def main():
+	app = QApplication(sys.argv)
+	if float(sys.version[0:3]) < 3.6:
+		ex = VersionError()
+	else:
+		ex = MainWindow()
+	sys.exit(app.exec_())
+
+if __name__ == "__main__":
+	main()

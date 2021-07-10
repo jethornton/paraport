@@ -1,0 +1,9 @@
+old
+*.dsc
+*.xz
+*.buildinfo
+*.changes
+paraport/debian/paraport
+paraport/debian/.debhelper
+paraport/debian/debhelper-build-stamp
+paraport/debian/*.substvars

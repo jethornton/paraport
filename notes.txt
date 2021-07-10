@@ -1,0 +1,23 @@
+help.py
+python3 -m PyQt5.uic.pyuic -x help.ui -o help.py
+
+
+create a changelog file
+
+dch --create
+
+change to released Note: you must either change something or use Ctrl o to save.
+
+dch --release
+
+Ctrl o to write out then Ctrl x
+
+Append a new entry to the current changelog
+dch --append
+
+To change the version
+dch -v 0.0.1
+
+to build a deb from the top most directory
+dpkg-buildpackage -us -uc
+

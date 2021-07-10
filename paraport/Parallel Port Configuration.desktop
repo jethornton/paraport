@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Parallel Port Configuration Tool
+Comment=LinuxCNC Configuration Tool
+Exec=paraport
+Icon=/usr/share/pixmaps/linuxcncicon.png
+Categories=X-CNC;Development
+Terminal=false
+StartupNotify=true
+StartupWMClass=paraport
+Name[en_US]=Paraport Configuration Tool
