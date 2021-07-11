@@ -3,6 +3,7 @@ old
 *.xz
 *.buildinfo
 *.changes
+docs/build
 paraport/debian/paraport
 paraport/debian/.debhelper
 paraport/debian/debhelper-build-stamp
