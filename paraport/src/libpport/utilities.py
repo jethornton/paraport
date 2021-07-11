@@ -57,21 +57,20 @@ def pidSetDefault(parent):
 
 def driveChanged(parent):
 	timing = parent.sender().itemData(parent.sender().currentIndex())
-	joint = parent.sender().objectName()[-1]
 	if timing:
-		getattr(parent, 'stepTime_' + joint).setText(timing[0])
-		getattr(parent, 'stepSpace_' + joint).setText(timing[1])
-		getattr(parent, 'dirSetup_' + joint).setText(timing[2])
-		getattr(parent, 'dirHold_' + joint).setText(timing[3])
-		getattr(parent, 'stepTime_' + joint).setEnabled(False)
-		getattr(parent, 'stepSpace_' + joint).setEnabled(False)
-		getattr(parent, 'dirSetup_' + joint).setEnabled(False)
-		getattr(parent, 'dirHold_' + joint).setEnabled(False)
+		parent.stepTime.setText(timing[0])
+		parent.stepSpace.setText(timing[1])
+		parent.dirSetup.setText(timing[2])
+		parent.dirHold.setText(timing[3])
+		parent.stepTime.setEnabled(False)
+		parent.stepSpace.setEnabled(False)
+		parent.dirSetup.setEnabled(False)
+		parent.dirHold.setEnabled(False)
 	else:
-		getattr(parent, 'stepTime_' + joint).setEnabled(True)
-		getattr(parent, 'stepSpace_' + joint).setEnabled(True)
-		getattr(parent, 'dirSetup_' + joint).setEnabled(True)
-		getattr(parent, 'dirHold_' + joint).setEnabled(True)
+		parent.stepTime.setEnabled(True)
+		parent.stepSpace.setEnabled(True)
+		parent.dirSetup.setEnabled(True)
+		parent.dirHold.setEnabled(True)
 
 def plcOptions():
 	return ['ladderRungsSB', 'ladderBitsSB', 'ladderWordsSB',

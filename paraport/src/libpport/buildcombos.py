@@ -1,21 +1,4 @@
 def build(parent):
-	axes = [
-		['Select', False],
-		['X', 'X'],
-		['Y', 'Y'],
-		['Z', 'Z'],
-		['A', 'A'],
-		['B', 'B'],
-		['C', 'C'],
-		['U', 'U'],
-		['V', 'V'],
-		['W', 'W']
-		]
-
-	for i in range(parent.card['joints']):
-		for item in axes:
-			getattr(parent, f'axisCB_{i}').addItem(item[0], item[1])
-
 	linearUnits = [
 		['Select', False],
 		['Imperial', 'inch'],
@@ -71,9 +54,8 @@ def build(parent):
 		['Keling 4030', ['5000', '5000', '20000', '20000']]
 		]
 
-	for i in range(parent.card['joints']):
-		for item in drives:
-			getattr(parent, f'driveCB_{i}').addItem(item[0], item[1])
+	for item in drives:
+		parent.driveCB.addItem(item[0], item[1])
 
 	debug = [
 		['Debug Off', '0x00000000'],
