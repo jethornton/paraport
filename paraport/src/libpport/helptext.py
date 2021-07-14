@@ -5,11 +5,11 @@ Return text based on the tab number passed
 def descriptions(index):
 	if index == 0:   # Machine Tab
 		return text_0
-	elif index == 1: # Display Tab
+	elif index == 1: # Parallel Port 1
 		return text_1
-	elif index == 2: # Axis Tab
+	elif index == 2: # Parallel Port 2
 		return text_2
-	elif index == 3: # Spindle Tab
+	elif index == 3: # Axes
 		return text_3
 	elif index == 4: # Inputs Tab
 		return text_4
@@ -55,58 +55,53 @@ def descriptions(index):
 text_0 = """
 Help Text for Machine Tab
 
-IP Address 10.10.10.10 is recommended to avoid conflicts on your LAN
-	10.10.10.10 W5 Down W6 Up
-	192.168.1.121 W5 Down W6 Down
-
 Maximum Linear Velocity is in User Units per second.
 
-Firmware
-To read the current firmware select the IP Address first.
-	After reading the current firmware the Copy button will place the text in the clipboard.
-To flash a card select the firmware and IP Address first.
-	After flashing Reload or Power Cycle the card
+Manual Tool Change
+	This option is if you run G code with more than one tool and the tools can be
+	preset like BT and Cat holders. If you have collet type like ER and R8 you
+	should not check this and you should only use one tool per G code program and
+	touch it off before running the program.
 
-Only select encoders and stepgens if you want less that default.
+PyVCP Panel
+	This option adds the connections and a basic PyVCP panel.
+
+Debug Options
+	This sets the debug level that is used when an error happens. When an error
+	occours the error information is sent to dmesg. Open a terminal and clear
+	dmesg with sudo dmesg -c then run your configuration and to view the error
+	in a terminal type dmesg.
+
 """
 
 text_1 = """
-Help Text for Display Tab
+Help Text for Parallel Port 1 Tab
 
-Offset and Feedback display use relative (including offsets) or absolute machine.
-Overrides use percent of programed value.
-QtPyVCP can only be installed on Debian 9
+Select Port Type In or Out to get pins.
+
+Port Address is usually 0
 """
 
 text_2 = """
-Help Text for Axis Tab
+Help Text for Parallel Port 2 Tab
 
-Joints must be configured starting with 0 and not skipping any.
+Select Port Type In or Out to get pins.
 
-Any joint can have any axis letter.
-
-Scale is the number of steps to move one user unit (inch or mm).
-Limits are in user units.
-Velocity is user units per second, Acceleration is user units per second per second
-
-Axis, PID Settings and StepGen Settings are required.
-
-Homing fields are optional.
-
-For gantry type of machines just select the same axis for each joint.
+Port Address is usually 1
 """
 
 text_3 = """
-Help Text for Spindle Tab
+Help Text for Axes Tab
+
+Select Step and Direction for an Axis and that tab will
+be enabled
 """
 
 text_4 = """
-Help Text for Inputs Tab
+Help Text for PLC Tab
 
-Inputs are optional
-
-If the input is a type that is associated with an axis the axis must be
-specified.
+Classicladder PLC will add a basic PLC to the configuration. You can also set
+the number of components that Classicladder starts with.
 """
 
 text_5 = """
@@ -157,11 +152,7 @@ Help Text for 7i87 Tab
 text_8 = """
 Help Text for Options Tab
 
-On Screen Prompt for Manual Tool Change
-	This option is if you run G code with more than one tool and the tools can be
-	preset like BT and Cat holders. If you have collet type like ER and R8 you
-	should not check this and you should only one tool per G code program and
-	touch it off before running the program.
+
 
 Hal User Interface
 	This option enables halui which exports hal pins so they can be connected to
@@ -169,24 +160,18 @@ Hal User Interface
 	to abort, tool, spindle, program, mode, mdi, coolant, max velocity, machine,
 	lube, joint, jog, feed override, rapid override, e stop, axis and home.
 
-PyVCP Panel
-	This option adds the connections and a basic PyVCP panel.
+
 
 GladeVCP Panel
 	Not functioning at this point.
 
-Debug Options
-	This sets the debug level that is used when an error happens. When an error
-	occours the error information is sent to dmesg. Open a terminal and clear
-	dmesg with sudo dmesg -c then run your configuration and to view the error
-	in a terminal type dmesg.
+
 """
 
 text_9 = """
 Help Text for PLC Tab
 
-Classicladder PLC will add a basic PLC to the configuration. You can also set
-the number of components that Classicladder starts with.
+
 """
 text_10 = """
 Help Text for Pins Tab

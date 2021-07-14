@@ -5,7 +5,7 @@ from functools import partial
 import faulthandler
 
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5 import uic
+from PyQt5 import uic, QtWidgets
 
 
 #from libpport import buildmenus
@@ -61,6 +61,7 @@ class MainWindow(QMainWindow):
 
 		self.setWindowTitle("Parallel Port Configuration Tool")
 		self.card = {'joints':5}
+		self.helpInfo = helptext.descriptions
 		buildcombos.build(self)
 		self.setupConnections()
 		self.setupVars()
@@ -71,6 +72,9 @@ class MainWindow(QMainWindow):
 		self.show()
 
 	def setupConnections(self):
+		self.actionTabHelp.triggered.connect(self.help)
+		self.actionBuildHelp.triggered.connect(partial(self.help, 20))
+		self.actionPCHelp.triggered.connect(partial(self.help, 30))
 		self.configName.textChanged[str].connect(partial(utilities.configNameChanged, self))
 		self.driveCB.currentIndexChanged.connect(partial(utilities.driveChanged, self))
 		self.pp1typeCB.currentIndexChanged.connect(partial(buildmenus.buildPort1, self))
@@ -84,6 +88,17 @@ class MainWindow(QMainWindow):
 		self.p1outBtns = {}
 		self.p2inBtns = {}
 		self.p2outBtns = {}
+
+	def help(self, index = False):
+		dialog = QtWidgets.QDialog()
+		dialog.ui = helpDialog()
+		dialog.ui.setupUi(dialog)
+		if index:
+			dialog.ui.helpPTE.setPlainText(self.helpInfo(index))
+		else:
+			index = self.tabWidget.currentIndex()
+			dialog.ui.helpPTE.setPlainText(self.helpInfo(self.tabWidget.currentIndex()))
+		dialog.exec_()
 
 def main():
 	app = QApplication(sys.argv)

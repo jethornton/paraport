@@ -141,7 +141,7 @@ def buildPort2(parent):
 		for i in range(len(inPins)):
 			inGrid.addWidget(QLabel(f'Pin {inPins[i]}'), i, 0)
 			parent.p2inBtns[f'p2InPB_{i}'] = QPushButton('Select')
-			inGrid.addWidget(parent.p1inBtns[f'p2InPB_{i}'],i , 1)
+			inGrid.addWidget(parent.p2inBtns[f'p2InPB_{i}'],i , 1)
 		inGrid.addItem(verticalSpacer)
 
 	elif parent.pp2typeCB.currentData() == 'out':
